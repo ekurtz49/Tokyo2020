@@ -125,7 +125,8 @@ ggplot(rankData, aes(x=factor(who, levels=unique(who)), y=points, fill=factor(te
   geom_col(color = "black") +
   
   # Set opacity for Bronze, Silver, Gold
-  scale_alpha_manual(values = c(0.3,0.65,1)) +
+  scale_alpha_manual(values = c(0.3,0.65,1),
+                     name = "Medal Type") +
   
   # Assign custom colors to each country
   scale_fill_manual(values = c("#ffce00","#009246","#cc092f",
@@ -133,10 +134,14 @@ ggplot(rankData, aes(x=factor(who, levels=unique(who)), y=points, fill=factor(te
                                "#012169","#d52b1e","#5eb6e4",
                                "#d52b1e","#21468b","#00a651",
                                "#bc002d","#00459b","#ffd521",
-                               "#00008b","#ed2939","#8dd4f4")) +
+                               "#00008b","#ed2939","#8dd4f4"),
+                    name = "Team") +
   
   # Place labels with customizations from earlier
-  geom_text(aes(label = testLabel), position=position_stack(vjust=0.5), size = 5, color = "#000000")
+  geom_text(aes(label = testLabel), position=position_stack(vjust=0.5), size = 5, color = "#000000") +
+  
+  # Adjust placement of legend
+  theme(legend.position="bottom", legend.direction="horizontal")
 
 
 
