@@ -1,0 +1,13 @@
+name: Tokyo2020
+title: Tokyo2020
+username:
+account: marekjozsef
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 4419820
+bundleId: 4853375
+url: https://marekjozsef.shinyapps.io/Tokyo2020/
+when: 1627180040.6126
+lastSyncTime: 1627180040.6126
+asMultiple: FALSE
+asStatic: FALSE
