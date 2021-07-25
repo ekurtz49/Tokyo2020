@@ -1,6 +1,8 @@
 # two helper functions
 
-
+library(shiny)
+library(ggplot2)
+library(rvest)
 
 
 # Function: scrape a single URL
