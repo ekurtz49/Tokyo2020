@@ -35,18 +35,25 @@ shinyServer(function(input, output) {
   rankData$points = rankData$medals*c(3,2,1,6,4,2,20,10,5)
   #Populate Data
   rankData = updateMedalsAndPoints(rankData)
+  # Initialize a reactive variable
+  rctvStuff = reactiveValues(newDataRequested = TRUE)
    
   
+  ## Manual Update
+  observeEvent(input$refreshData,{
+    # Run update
+    rankData = updateMedalsAndPoints(rankData)
+    # Toggle this variable to wake up relevant output functions
+    rctvStuff$newDataRequested = FALSE
+    rctvStuff$newDataRequested = TRUE
+  })
   
   
-  
-  
-  #make the plot
-  output$distPlot <- renderPlot({
+  ## Plotting Function
+  output$mainBarChart <- renderPlot({
+    # Enable manual refresh
+    if (rctvStuff$newDataRequested == FALSE) {return()}
     
-   
-    
-    ## Generate Plot
     # Format the lables to prevent overlapping
     testLabel = paste(rankData$medals,rankData$type)
     testLabel = gsub("Gold","G               ",testLabel)
@@ -59,21 +66,44 @@ shinyServer(function(input, output) {
       # Black border for all segments
       geom_col(color = "black") +
       
-      # Set opacity for Bronze, Silver, Gold
-      scale_alpha_manual(values = c(0.3,0.65,1)) +
-      
-      # Assign custom colors to each country
+      # Assign custom colors to each country, and format legend
       scale_fill_manual(values = c("#ffce00","#009246","#cc092f",
                                    "#dd290f","#477050","#003893",
                                    "#012169","#d52b1e","#5eb6e4",
                                    "#d52b1e","#21468b","#00a651",
                                    "#bc002d","#00459b","#ffd521",
-                                   "#00008b","#ed2939","#8dd4f4")) +
+                                   "#00008b","#ed2939","#8dd4f4"),
+                        name = "Team",
+                        guide = guide_legend(nrow = 3, title.position = "top", title.hjust = 0.5, title.theme = element_text(face = "bold"))) +
+      
+      # Set opacity for Bronze, Silver, Gold, and format legend
+      scale_alpha_manual(values = c(0.3,0.65,1),
+                         name = "Medal Type",
+                         guide = guide_legend(title.position = "top", title.hjust = 0.5, title.theme = element_text(face = "bold"))) +
       
       # Place labels with customizations from earlier
-      geom_text(aes(label = testLabel), position=position_stack(vjust=0.5), size = 5, color = "#000000")
+      geom_text(aes(label = testLabel), position=position_stack(vjust=0.5), size = 5, color = "#000000") +
+    
+      # Adjust axis labels and assign title
+      ggtitle("Current Scoreboard", subtitle = paste0("(As of ", timestamp(prefix="", suffix=""),")")) +
+      xlab("Player") +
+      ylab("Points") +
+      
+      # Adjust placement of legend and general formatting
+      theme(legend.position="bottom", legend.direction="horizontal",
+            plot.title = element_text(hjust = 0.5, size = 24, face = "bold"),
+            plot.subtitle = element_text(hjust = 0.5, size=16),
+            axis.title = element_text(size=16, face = "bold")
+            )
     
     
   })
+  
+  
+  ## Note last refresh time
+  # output$lastUpdate <- renderText({
+  #   if (rctvStuff$newDataRequested == FALSE) {return()}
+  #   paste("Last Refresh:",timestamp(prefix = "",suffix=""))
+  # })
   
 })

@@ -13,11 +13,16 @@ library(rvest)
 shinyUI(fluidPage(
   
   # Application title
-  titlePanel("Greater Kurtz Family Tokyo 2020 Standings"),
+  titlePanel(h1("Greater Kurtz Family Tokyo 2020 Standings", align="center"), windowTitle = "Greater Kurtz Family Tokyo 2020 Standings"),
 
-    
-    # Show a plot of the generated distribution
-    mainPanel(
-       plotOutput("distPlot")
-    )
+  # Plot output
+  fluidRow(
+       plotOutput("mainBarChart", height="700px")
+  ),
+  
+  # Show a button to check for new data
+  fluidRow(
+    div(actionButton("refreshData", "Refresh Data"),align="center")
+    #textOutput("lastUpdate")
+  )
 ))
