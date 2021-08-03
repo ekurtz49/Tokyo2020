@@ -15,14 +15,16 @@ shinyServer(function(input, output) {
   
   ## Make basic data table
   rankData = data.frame(
-    who = c(rep("Q",9),rep("Emily",9),rep("Becky",9),rep("Katie",9),rep("Tom",9),rep("Denise",9)),
-    team = c(rep("Germany",3),rep("Italy",3),rep("Angola",3),
+    who = c(rep("USA",9),rep("Q",9),rep("Emily",9),rep("Becky",9),rep("Katie",9),rep("Tom",9),rep("Denise",9)),
+    team = c(rep("USA",3),rep("PH1",3),rep("PH2",3),
+             rep("Germany",3),rep("Italy",3),rep("Angola",3),
              rep("China",3),rep("Hungary",3),rep("Nepal",3),
              rep("UK",3),rep("Canada",3),rep("San Marino",3),
              rep("Russia",3),rep("Netherlands",3),rep("Refugees",3),
              rep("Japan",3),rep("South Korea",3),rep("Bos n Herz",3),
              rep("Australia",3),rep("France",3),rep("Guam",3)),
-    scrape = c(rep("noc-profile-germany.htm",3),rep("noc-profile-italy.htm",3),rep("noc-profile-angola.htm",3),
+    scrape = c(rep("noc-profile-united-states.htm",3),rep("noc-profile-angola.htm",3),rep("noc-profile-angola.htm",3),
+               rep("noc-profile-germany.htm",3),rep("noc-profile-italy.htm",3),rep("noc-profile-angola.htm",3),
                rep("noc-profile-china.htm",3),rep("noc-profile-hungary.htm",3),rep("noc-profile-nepal.htm",3),
                rep("noc-profile-great-britain.htm",3),rep("noc-profile-canada.htm",3),rep("noc-profile-san-marino.htm",3),
                rep("noc-profile-roc.htm",3),rep("noc-profile-netherlands.htm",3),rep("noc-profile-refugee-olympic-team.htm",3),
@@ -54,6 +56,10 @@ shinyServer(function(input, output) {
     # Enable manual refresh
     if (rctvStuff$newDataRequested == FALSE) {return()}
     
+    # Record time of refresh
+    refreshTime = Sys.time()
+    attr(refreshTime, "tzone") = "America/New_York"
+    
     # Format the lables to prevent overlapping
     testLabel = paste(rankData$medals,rankData$type)
     testLabel = gsub("Gold","G               ",testLabel)
@@ -67,7 +73,8 @@ shinyServer(function(input, output) {
       geom_col(color = "black") +
       
       # Assign custom colors to each country, and format legend
-      scale_fill_manual(values = c("#ffce00","#009246","#cc092f",
+      scale_fill_manual(values = c("#00459b","#000000","#000000",
+                                   "#ffce00","#009246","#cc092f",
                                    "#dd290f","#477050","#003893",
                                    "#012169","#d52b1e","#5eb6e4",
                                    "#d52b1e","#21468b","#00a651",
@@ -83,9 +90,10 @@ shinyServer(function(input, output) {
       
       # Place labels with customizations from earlier
       geom_text(aes(label = testLabel), position=position_stack(vjust=0.5), size = 5, color = "#000000") +
+      #geom_text(aes(label = stat(score), group = who), stat = 'summary', fun = sum, vjust = -1) +
     
       # Adjust axis labels and assign title
-      ggtitle("Current Scoreboard", subtitle = paste0("(As of ", timestamp(prefix="", suffix=""),")")) +
+      ggtitle("Current Scoreboard", subtitle = paste0("(As of ", refreshTime," ET)")) +
       xlab("Player") +
       ylab("Points") +
       

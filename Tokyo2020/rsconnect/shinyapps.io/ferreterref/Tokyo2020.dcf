@@ -1,0 +1,13 @@
+name: Tokyo2020
+title: Tokyo2020
+username:
+account: ferreterref
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 4434689
+bundleId: 4884156
+url: https://ferreterref.shinyapps.io/Tokyo2020/
+when: 1628004853.87267
+lastSyncTime: 1628004853.87267
+asMultiple: FALSE
+asStatic: FALSE

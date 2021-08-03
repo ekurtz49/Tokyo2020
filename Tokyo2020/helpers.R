@@ -22,7 +22,7 @@ getCountryMedals = function(url) {
 
 # Function: scrape all the URLs
 updateMedalsAndPoints = function(rankData) {
-  for (i in 1:(length(unique(rankData$scrape)))) {
+  for (i in 1:(length(unique(rankData$team)))) {
     url = paste0(rankData$scrapeRoot[1],rankData$scrape[(i*3-2)])
     rankData$medals[(i*3-2):(i*3)] = getCountryMedals(url)
   }

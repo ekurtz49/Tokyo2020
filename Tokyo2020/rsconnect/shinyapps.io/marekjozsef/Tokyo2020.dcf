@@ -5,9 +5,9 @@ account: marekjozsef
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 4419820
-bundleId: 4854306
+bundleId: 4854891
 url: https://marekjozsef.shinyapps.io/Tokyo2020/
-when: 1627224166.32288
-lastSyncTime: 1627224166.32288
+when: 1627247295.66807
+lastSyncTime: 1627247295.66807
 asMultiple: FALSE
 asStatic: FALSE
