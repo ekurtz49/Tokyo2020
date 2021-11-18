@@ -16,7 +16,7 @@ shinyServer(function(input, output) {
   ## Make basic data table
   rankData = data.frame(
     who = c(rep("USA",9),rep("Q",9),rep("Emily",9),rep("Becky",9),rep("Katie",9),rep("Tom",9),rep("Denise",9)),
-    team = c(rep("USA",3),rep("PH1",3),rep("PH2",3),
+    team = c(rep("USA",3),rep("NA1",3),rep("NA2",3),
              rep("Germany",3),rep("Italy",3),rep("Angola",3),
              rep("China",3),rep("Hungary",3),rep("Nepal",3),
              rep("UK",3),rep("Canada",3),rep("San Marino",3),
@@ -34,7 +34,7 @@ shinyServer(function(input, output) {
   )
   rankData$medals = rep(1,length(rankData$who))
   rankData$type = rep(c("Gold","Silver","Bronze"),length(rankData$who)/3)
-  rankData$points = rankData$medals*c(3,2,1,6,4,2,20,10,5)
+  rankData$points = rankData$medals*c(3,2,1,6,4,2,60,40,20)
   #Populate Data
   rankData = updateMedalsAndPoints(rankData)
   # Initialize a reactive variable

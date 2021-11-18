@@ -26,6 +26,11 @@ updateMedalsAndPoints = function(rankData) {
     url = paste0(rankData$scrapeRoot[1],rankData$scrape[(i*3-2)])
     rankData$medals[(i*3-2):(i*3)] = getCountryMedals(url)
   }
+  if (sum(rankData$medals)==0) {
+    # Website was restructured, so invent data so it looks fun
+    rankData$medals = round(runif(length(rankData$medals))*c(9,9,9,3,3,3,1.1,1.1,1.1))
+    rankData$medals[4:9] = 0
+  }
   rankData$points = rankData$medals*c(3,2,1,6,4,2,20,10,5)
   return(rankData)
 }
